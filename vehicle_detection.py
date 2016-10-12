@@ -11,19 +11,25 @@ cap = cv2.VideoCapture(video_src)
 car_cascade = cv2.CascadeClassifier(cascade_src)
 
 while True:
+    imgcar = cv2.imread('dataset/gt1.jpg')
     ret, img = cap.read()
     if (type(img) == type(None)):
         break
     
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    
     cars = car_cascade.detectMultiScale(gray, 1.1, 1)
-
     for (x,y,w,h) in cars:
         cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)      
-    
+   
+    gray = cv2.cvtColor(imgcar, cv2.COLOR_BGR2GRAY)
+    cars = car_cascade.detectMultiScale(gray, 1.1, 1)
+    for (x,y,w,h) in cars:
+        cv2.rectangle(imgcar,(x,y),(x+w,y+h),(0,0,255),2)      
+   
+
+
     cv2.imshow('video', img)
-    
+    cv2.imshow('car',imgcar)
     if cv2.waitKey(33) == 27:
         break
 
